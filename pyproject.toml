@@ -27,5 +27,5 @@ include = ["cosmonaut*"]
 cosmonaut-config = "cosmonaut.cli.core:main"
 
 [project.urls]
-"Homepage" = "https://github.com/amityadav/cosmonaut"
-"Bug Tracker" = "https://github.com/amityadav/cosmonaut/issues"
+"Homepage" = "https://github.com/am1tyadav/cosmonaut"
+"Bug Tracker" = "https://github.com/am1tyadav/cosmonaut/issues"

@@ -57,7 +57,7 @@ pip install git+https://github.com/am1tyadav/cosmonaut.git
 
 ## Quickstart
 
-Provided you have a configuration file (eg. [config.yml](examples/single_label/config.yml)) describing your classification problem, and have a Pandas DataFrame for the inputs, you can run Cosmonaut with:
+Provided you have a configuration file (eg. [config.yml](https://github.com/am1tyadav/cosmonaut/tree/main/examples/single_label/config.yml)) describing your classification problem, and have a Pandas DataFrame for the inputs, you can run Cosmonaut with:
 
 ```python
 from pathlib import Path
@@ -78,7 +78,7 @@ predictions = classifier.run(inputs)
 
 ## Example - Multi Label, Single Category Classification
 
-[Example Source Code](examples/multi_label)
+[Example Source Code](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_label)
 
 A multi-label, single category classification problem allows each input to have multiple labels within the same category. In our example, we will classify "Gift Suggestions" based on a user's text description of their interests. Given a text input describing a user's preferences, the classifier will generate one or more appropriate gift suggestions as labels within the "Gift Suggestions" category.
 
@@ -230,14 +230,14 @@ if __name__ == "__main__":
 
 ## Scaling Cosmonaut
 
-Cosmonaut uses Pandas to handle the input data - however, this can be a bottleneck when dealing with large datasets. Fortunately, we can use Dask, Ray or Spark to parallelize the data processing. A [PySpark Example](examples/pyspark) is provided.
+Cosmonaut uses Pandas to handle the input data - however, this can be a bottleneck when dealing with large datasets. Fortunately, we can use Dask, Ray or Spark to parallelize the data processing. Example(s) provided below.
 
 ## List of Examples
 
-- [Single Label, Single Category Classification](examples/single_label)
-- [Multi Label, Single Category Classification](examples/multi_label)
-- [Multi Label, Multi Category Classification](examples/multi_category)
-- [Distributed Predictions with PySpark](examples/pyspark)
+- [Single Label, Single Category Classification](https://github.com/am1tyadav/cosmonaut/tree/main/examples/single_label)
+- [Multi Label, Single Category Classification](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_label)
+- [Multi Label, Multi Category Classification](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_category)
+- [Distributed Predictions with PySpark](https://github.com/am1tyadav/cosmonaut/tree/main/examples/pyspark)
 
 ## Development
 
