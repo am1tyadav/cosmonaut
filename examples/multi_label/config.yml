@@ -1,0 +1,50 @@
+classifier:
+  instructions_filename: instructions.txt
+  instructions: null # Populated when loading the configuration
+  categories:
+    0:
+      name: Gift Suggestion
+      description: A gift suggestion based on user preferences.
+      max_predictions: 2
+      labels:
+        0:
+          name: Automobile
+          description: a car, or any vehicle with 4 wheels
+        1:
+          name: Video Game
+          description: a game played on a computer, console, or handheld device
+        2:
+          name: Book
+          description: a book, or any written work
+        3:
+          name: Gift Card
+          description: a gift card, or a gift certificate
+  examples:
+    - prediction:
+        0:
+          name: Gift Suggestion
+          labels:
+            1:
+              name: Video Game
+              reason: The user is interested in video games.
+            3:
+              name: Gift Card
+              reason: The user likes to use gift cards to buy video games online.
+    - prediction:
+        0:
+          name: Gift Suggestion
+          labels:
+            2:
+              name: Book
+              reason: The user likes to read books but don't have other interests.
+
+ai_client:
+  ai_provider: anthropic
+  name: claude-3-5-sonnet-20241022
+  api_key_var: ANTHROPIC_API_KEY
+  base_url: https://api.anthropic.com/v1
+  timeout: 30
+  max_tokens: 2048
+
+data:
+  result_column: result

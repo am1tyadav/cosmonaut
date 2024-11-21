@@ -1,0 +1,41 @@
+classifier:
+  instructions_filename: instructions.txt
+  instructions: null # Populated when loading the configuration
+  categories:
+    0:
+      name: sentiment
+      description: A sentiment expressed in a review by a user.
+      max_predictions: 1
+      labels:
+        0:
+          name: negative
+          description: user is not happy with the product
+        1:
+          name: positive
+          description: user is happy with the product
+  examples:
+    - prediction:
+        0:
+          name: sentiment
+          labels:
+            1:
+              name: positive
+              reason: The user likes the product very much.
+    - prediction:
+        0:
+          name: sentiment
+          labels:
+            0:
+              name: negative
+              reason: The user did not like the product.
+
+ai_client:
+  ai_provider: openai
+  name: mistral-nemo-instruct-2407
+  api_key_var: OPENAI_API_KEY
+  base_url: http://localhost:1234/v1
+  timeout: 30
+  max_tokens: 2048
+
+data:
+  result_column: result
