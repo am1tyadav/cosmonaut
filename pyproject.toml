@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cosmonaut"
-version = "0.0.3"
+version = "0.0.4"
 description = "Helping you find structure in the cosmos of data."
 authors = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]
 maintainers = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]

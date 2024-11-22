@@ -37,7 +37,7 @@ class OpenAIProcessor(BaseProcessor):
 
     def parse_outputs(self, outputs: str, response_format: BaseModel) -> BaseModel:
         """Needed when the model doesn't support tools/ response_format directly"""
-        cleaned = outputs.replace("```json", "").replace("```", "")
+        cleaned = outputs.replace("```json", "").replace("```", "").replace("\n", "")
 
         try:
             return response_format.model_validate_json(cleaned)

@@ -17,6 +17,12 @@ class ResponseInfo(str, Enum):
     ERROR = "error"
 
 
+class KnownBaseURLs(str, Enum):
+    ANTHROPIC = "https://api.anthropic.com/v1"
+    OPENAI = "https://api.openai.com/v1"
+    GEMINI_OPENAI_COMPATIBLE = "https://generativelanguage.googleapis.com/v1beta/openai"
+
+
 """Prediction Schemas"""
 
 

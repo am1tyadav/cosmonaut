@@ -2,7 +2,23 @@ from pathlib import Path
 
 import yaml
 
-from cosmonaut.data_models import Config
+from cosmonaut.data_models import AIServiceProvider, Config, KnownBaseURLs
+
+
+def _handle_base_url(config: Config) -> Config:
+    if config.ai_client.base_url is None:
+        match config.ai_client.ai_provider:
+            case AIServiceProvider.ANTHROPIC:
+                config.ai_client.base_url = KnownBaseURLs.ANTHROPIC.value
+            case AIServiceProvider.OPENAI:
+                config.ai_client.base_url = KnownBaseURLs.OPENAI.value
+            case AIServiceProvider.GEMINI:
+                config.ai_client.base_url = KnownBaseURLs.GEMINI_OPENAI_COMPATIBLE.value
+            case _:
+                raise ValueError(
+                    f"Unsupported AI Provider type: {config.ai_client.ai_provider}"
+                )
+    return config
 
 
 def _get_prediction_schema(require_reason: bool) -> dict:
@@ -125,5 +141,6 @@ def load_config(config_or_config_path: dict | Path) -> Config:
         raise ValueError(f"Invalid config type: {type(config_or_config_path)}")
 
     config = Config.model_validate(data)
+    config = _handle_base_url(config)
     config.classifier.instructions = _build_instructions(config, instructions_dirpath)
     return config

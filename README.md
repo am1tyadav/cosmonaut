@@ -1,6 +1,6 @@
 # Cosmonaut
 
-![Image](assets/cosmonaut_header.jpg)
+![Cosmonaut](assets/cosmonaut_header.jpg)
 
 Helping you find structure in the cosmos of data.
 
@@ -8,9 +8,19 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 
 > Cosmonaut is currently in active development, and may not be suitable for production use.
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Quickstart](#quickstart)
+- [Step by Step Example](#step-by-step-example)
+- [More Examples](#more-examples)
+- [Development](#development)
+- [Known Issues](#known-issues)
+
 ## Features
 
-### Supports a Number of Classification Scenarios
+### Support Any Classification Scenario
 
 | Scenario                          | Description                                        | Example                                                                         |
 | --------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -19,17 +29,17 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 | Multi label, individual category  | Assigns multiple labels from a single category     | Topic tags: Can select any combination of Tech, Finance, and Health             |
 | Multi label, multiple categories  | Assigns multiple labels across multiple categories | Topics: Tech + Finance AND Languages: English + Spanish (multiple per category) |
 
-### Produces Structured Outputs
+### Produce Structured Outputs
 
 - Predictions are returned in structured outputs ✅
 - Supports structured outputs feature provided by the AI Providers, when available ⏳
 
-### Supports a Number of Unstructed Data Formats
+### Mix Unstructured Data Formats
 
 - Text ✅
 - Images ⏳
 
-### Supports a Number of AI Providers
+### Use Any AI Providers
 
 - Anthropic
   - Via Official REST API ✅
@@ -83,7 +93,7 @@ def create_prompt(row: pd.DataFGrame) -> str:
 predictions = Cosmonaut(config_filepath, create_prompt).run(inputs)
 ```
 
-## Example - Multi Label, Single Category Classification
+## Step by Step Example
 
 [Example Source Code](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_label)
 
@@ -175,25 +185,25 @@ if __name__ == "__main__":
     print(response.head())
 ```
 
-## List of Examples
+## More Examples
 
-### Example 1: Single Label, Single Category Classification with a Local Model
+### 1. Single Label, Single Category Classification with a Local Model
 
 You can use a local model to make predictions as long as the model runner is compatible with the OpenAI REST API (eg. LM Studio).
 
 [Link](https://github.com/am1tyadav/cosmonaut/tree/main/examples/single_label)
 
-### Example 2: Multi Label, Single Category Classification with Anthropic
+### 2. Multi Label, Single Category Classification with Anthropic
 
 [Link](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_label)
 
-### Example 3: Multi Label, Multi Category Classification with Gemini
+### 3. Multi Label, Multi Category Classification with Gemini
 
 Following examples uses a configuration that does not provide label descriptions or require reasons for predictions as both of these are optional.
 
 [Link](https://github.com/am1tyadav/cosmonaut/tree/main/examples/multi_category)
 
-### Example 4: Distributed Predictions with PySpark
+### 4. Distributed Predictions with PySpark
 
 Cosmonaut uses Pandas to handle the input data - however, this can be a bottleneck when dealing with large datasets. Fortunately, we can use Dask, Ray or Spark to parallelize the data processing. Following example uses PySpark to parallelize the data processing.
 
@@ -201,8 +211,8 @@ Cosmonaut uses Pandas to handle the input data - however, this can be a bottlene
 
 ## Development
 
-Contributions are welcome - Please open an issue or submit a pull request. Please feel free to open issues for feature requests as well.
+Contributions are welcome - Please open an issue or submit a pull request. Please feel free to open issues for feature requests as well. The project should support Python 3.10+.
 
-Known issues:
+## Known Issues
 
 - No test coverage
