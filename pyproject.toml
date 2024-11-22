@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cosmonaut"
+version = "0.0.3"
+description = "Helping you find structure in the cosmos of data."
+authors = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]
+maintainers = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+license = { file = "LICENSE" }
+readme = "README.md"
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[project.optional-dependencies]
+dev = ["pytest", "pyspark"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["cosmonaut*"]
+
+[project.scripts]
+cosmonaut-config = "cosmonaut.cli.core:main"
+
+[project.urls]
+"Homepage" = "https://github.com/am1tyadav/cosmonaut"
+"Bug Tracker" = "https://github.com/am1tyadav/cosmonaut/issues"

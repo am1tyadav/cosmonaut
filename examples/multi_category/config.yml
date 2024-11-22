@@ -1,0 +1,39 @@
+classifier:
+  instructions_filename: instructions.txt
+  instructions: null # Populated when loading the configuration
+  require_reason: false
+  label_descriptions_provided: false
+  categories:
+    - category: age_group
+      description: Most suitable age group for the book.
+      max_predictions: 1
+      labels:
+        - children
+        - adults
+    - category: gender
+      description: Most suitable gender(s) group for the book.
+      num_labels: 2
+      max_predictions: 2
+      labels:
+        - male
+        - female
+  examples:
+    - predictions:
+        - category: age_group
+          labels:
+            - adults
+        - category: gender
+          labels:
+            - male
+            - female
+
+ai_client:
+  ai_provider: gemini
+  name: gemini-1.5-flash
+  api_key_var: GEMINI_API_KEY
+  base_url: https://generativelanguage.googleapis.com/v1beta/openai
+  timeout: 10
+  max_tokens: 4096
+
+data:
+  result_column: result

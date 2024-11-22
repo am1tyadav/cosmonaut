@@ -1,0 +1,43 @@
+classifier:
+  instructions_filename: instructions.txt # Where the instructions are located wrt the config file
+  instructions: null # Populated when loading the configuration
+  require_reason: true # Require AI to give reason for each prediction
+  label_descriptions_provided: true # Provide label descriptions
+  categories: # List of categories to make predictions for
+    - category: Gift Suggestion
+      description: A gift suggestion based on user preferences.
+      max_predictions: 2 # Maximum number of labels to be predicted for this category
+      labels: # List of labels for this category, can also be a list of string values
+        # For example, can be labels: [label1, label2] if label_descriptions_provided is set to false
+        - label: Automobile
+          description: a car, or any vehicle with 4 wheels
+        - label: Video Game
+          description: a game played on a computer, console, or handheld device
+        - label: Book
+          description: a book, or any written work
+        - label: Gift Card
+          description: a gift card, or a gift certificate
+  examples: # It's helpful to provide examples to the LLMs
+    - predictions:
+        - category: Gift Suggestion
+          labels:
+            - label: Video Game
+              reason: The user is interested in video games.
+            - label: Gift Card
+              reason: The user likes to use gift cards to buy video games online.
+    - predictions:
+        - category: Gift Suggestion
+          labels:
+            - label: Book
+              reason: The user likes to read books but don't have other interests.
+
+ai_client:
+  ai_provider: anthropic
+  name: claude-3-5-sonnet-20241022
+  api_key_var: ANTHROPIC_API_KEY
+  base_url: https://api.anthropic.com/v1
+  timeout: 30
+  max_tokens: 2048
+
+data:
+  result_column: result
