@@ -16,6 +16,8 @@ class GeminiProcessor(OpenAIProcessor):
         generation_config = {
             "temperature": temperature,
             "maxOutputTokens": self._config.max_tokens,
+            "response_mime_type": "application/json",
+            "response_schema": self._config.prediction_schema,
         }
 
         data = {
@@ -25,5 +27,5 @@ class GeminiProcessor(OpenAIProcessor):
         }
         return data
 
-    def extract_text(self, response: dict) -> str:
+    def extract_output(self, response: dict) -> str | dict:
         return response["candidates"][0]["content"]["parts"][0]["text"]

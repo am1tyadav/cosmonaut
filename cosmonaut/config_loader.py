@@ -21,32 +21,33 @@ def _handle_base_url(config: Config) -> Config:
     return config
 
 
-def _get_prediction_schema(require_reason: bool) -> dict:
+def _get_prediction_schema(require_reason: bool, capitalise: bool = False) -> dict:
+    object_type = "OBJECT" if capitalise else "object"
+    array_type = "ARRAY" if capitalise else "array"
+    string_type = "STRING" if capitalise else "string"
+
     if require_reason:
         label_detail = {
-            "type": "object",
+            "type": object_type,
             "properties": {
-                "label": {"type": "string"},
-                "reason": {"type": "string"},
+                "label": {"type": string_type},
+                "reason": {"type": string_type},
             },
             "required": ["label", "reason"],
         }
     else:
-        label_detail = {
-            "type": "array",
-            "items": {"type": "string"},
-        }
+        label_detail = {"type": string_type}
     return {
-        "type": "object",
+        "type": object_type,
         "properties": {
             "predictions": {
-                "type": "array",
+                "type": array_type,
                 "items": {
-                    "type": "object",
+                    "type": object_type,
                     "properties": {
-                        "category": {"type": "string"},
+                        "category": {"type": string_type},
                         "labels": {
-                            "type": "array",
+                            "type": array_type,
                             "items": label_detail,
                         },
                     },
@@ -109,6 +110,7 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
 
     # Todo: write a function to simplify schema
     schema = _get_prediction_schema(config.classifier.require_reason)
+    config.ai_client.prediction_schema = schema
 
     schema_text = f"\nThe following is the schema for the response:\n\n{schema}\n\n"
     schema_text += (

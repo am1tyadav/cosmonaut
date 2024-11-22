@@ -32,7 +32,10 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 ### Produce Structured Outputs
 
 - Predictions are returned in structured outputs ✅
-- Supports structured outputs feature provided by the AI Providers, when available ⏳
+- Supports structured outputs feature provided by the AI Providers, when available
+  - Anthropic ✅
+  - Gemini ✅
+  - OpenAI ⏳
 
 ### Mix Unstructured Data Formats
 

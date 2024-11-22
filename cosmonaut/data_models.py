@@ -72,6 +72,7 @@ class AIClientConfig(BaseModel):
     base_url: str | None = None
     timeout: int = 30
     max_tokens: int = 2048
+    prediction_schema: dict | None = None
 
 
 class DataConfig(BaseModel):

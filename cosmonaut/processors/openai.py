@@ -1,9 +1,11 @@
 import ast
 
-from loguru import logger
 from pydantic import BaseModel
 
+from cosmonaut.logging import get_logger
 from cosmonaut.processors.base import BaseProcessor
+
+logger = get_logger(__name__)
 
 
 class OpenAIProcessor(BaseProcessor):
@@ -32,11 +34,14 @@ class OpenAIProcessor(BaseProcessor):
         }
         return data
 
-    def extract_text(self, response: dict) -> str:
+    def extract_output(self, response: dict) -> str | dict:
         return response["choices"][0]["message"]["content"]
 
-    def parse_outputs(self, outputs: str, response_format: BaseModel) -> BaseModel:
+    def parse_outputs(
+        self, text_or_dict: str | dict, response_format: BaseModel
+    ) -> BaseModel:
         """Needed when the model doesn't support tools/ response_format directly"""
+        outputs = text_or_dict  # is text in this case
         cleaned = outputs.replace("```json", "").replace("```", "").replace("\n", "")
 
         try:
