@@ -13,7 +13,7 @@ class Cosmonaut:
     def __init__(
         self,
         config_or_config_filepath: dict | Path,
-        fn_create_prompt: Callable[[pd.Series], str],
+        fn_create_prompt: Callable[[pd.DataFrame], str],
     ):
         self._config_or_config_filepath = config_or_config_filepath
         self._config = load_config(config_or_config_filepath)

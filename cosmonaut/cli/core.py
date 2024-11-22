@@ -1,15 +1,11 @@
 import questionary
-import typer
 import yaml
 
 from cosmonaut.data_models import AIServiceProvider
 
-app = typer.Typer()
 
-
-@app.command()
 def config():
-    typer.echo("============== AI Provider Configuration ==============")
+    print("============== AI Provider Configuration ==============")
 
     ai_provider = questionary.select(
         "Select AI Provider:", choices=[option.value for option in AIServiceProvider]
@@ -29,7 +25,7 @@ def config():
 
     categories = []
 
-    typer.echo("============== Classifier Configuration ==============")
+    print("============== Classifier Configuration ==============")
 
     require_reason = questionary.confirm("Require reason for predictions?").ask()
     label_descriptions_provided = questionary.confirm(
@@ -91,9 +87,5 @@ def config():
     with open(output_path, "w") as f:
         yaml.dump(config, f, sort_keys=False, default_flow_style=False)
 
-    typer.echo(f"Configuration file generated at: {output_path}")
-    typer.echo("Please edit the configuration file to add examples and other details.")
-
-
-def main():
-    app()
+    print(f"Configuration file generated at: {output_path}")
+    print("Please edit the configuration file to add examples and other details.")

@@ -13,7 +13,7 @@ def _handle_base_url(config: Config) -> Config:
             case AIServiceProvider.OPENAI:
                 config.ai_client.base_url = KnownBaseURLs.OPENAI.value
             case AIServiceProvider.GEMINI:
-                config.ai_client.base_url = KnownBaseURLs.GEMINI_OPENAI_COMPATIBLE.value
+                config.ai_client.base_url = KnownBaseURLs.GEMINI.value
             case _:
                 raise ValueError(
                     f"Unsupported AI Provider type: {config.ai_client.ai_provider}"

@@ -41,14 +41,10 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 
 ### Use Any AI Providers
 
-- Anthropic
-  - Via Official REST API ✅
-- Gemini
-  - Via Official REST API ⏳
-  - Via OpenAI Compatible REST API ✅
-- OpenAI
-  - Via Official REST API ✅
-- Support for other providers with OpenAI compatible REST API ✅
+- Anthropic ✅
+- Gemini ✅
+- OpenAI ✅
+- Support for other providers which support OpenAI REST API ✅
 
 ### Easy to Use
 
@@ -185,6 +181,33 @@ if __name__ == "__main__":
     print(response.head())
 ```
 
+You can expect to see something like the following output for each of the inputs:
+
+```json
+{
+  "success": true,
+  "info": "success",
+  "detail": null,
+  "predictions": {
+    "predictions": [
+      {
+        "category": "Gift Suggestion",
+        "labels": [
+          {
+            "label": "Video Game",
+            "reason": "The user explicitly states they enjoy playing video games and plays them frequently"
+          },
+          {
+            "label": "Gift Card",
+            "reason": "The user mentions they regularly use gift cards to purchase video games online"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
 ## More Examples
 
 ### 1. Single Label, Single Category Classification with a Local Model
@@ -211,7 +234,10 @@ Cosmonaut uses Pandas to handle the input data - however, this can be a bottlene
 
 ## Development
 
-Contributions are welcome - Please open an issue or submit a pull request. Please feel free to open issues for feature requests as well. The project should support Python 3.10+.
+Contributions are welcome - Please open an issue or submit a pull request. Please feel free to open issues for feature requests as well. Some considerations when developing:
+
+- The project should support Python 3.10+
+- [trunk.io](https://trunk.io) is used but only as a linter
 
 ## Known Issues
 

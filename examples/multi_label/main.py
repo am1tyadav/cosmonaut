@@ -1,5 +1,4 @@
 from pathlib import Path
-from pprint import pprint
 
 import pandas as pd
 from dotenv import load_dotenv
@@ -31,4 +30,4 @@ if __name__ == "__main__":
     classifier = Cosmonaut(config_filepath, create_prompt)
     response = classifier.run(inputs)
 
-    pprint(response[classifier.config.data.result_column].tolist())
+    print(response[classifier.config.data.result_column].tolist())
