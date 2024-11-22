@@ -1,6 +1,5 @@
 classifier:
   instructions_filename: instructions.txt
-  instructions: null # Populated when loading the configuration
   require_reason: true
   label_descriptions_provided: true
   categories:

@@ -12,11 +12,6 @@ class AIServiceProvider(str, Enum):
     GEMINI = "gemini"
 
 
-class ResponseInfo(str, Enum):
-    SUCCESS = "success"
-    ERROR = "error"
-
-
 class KnownBaseURLs(str, Enum):
     ANTHROPIC = "https://api.anthropic.com/v1"
     OPENAI = "https://api.openai.com/v1"
@@ -56,7 +51,7 @@ class CategoryConfig(BaseModel):
 
 
 class ClassifierConfig(BaseModel):
-    instructions_filename: Path | None = None
+    instructions_filename: Path
     instructions: str | None = None
     require_reason: bool = True
     label_descriptions_provided: bool = True
@@ -90,6 +85,5 @@ class Config(BaseModel):
 
 class PredictionResponse(BaseModel):
     success: bool
-    info: str | None = None
     detail: str | None = None
     predictions: Predictions | None = None

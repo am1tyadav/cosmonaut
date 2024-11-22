@@ -24,6 +24,17 @@ class Cosmonaut:
     def config(self) -> Config:
         return self._config
 
+    def save_config(self, filepath: Path) -> None:
+        extension = filepath.suffix
+
+        if extension != ".json":
+            raise ValueError(
+                f"Config filepath must have .json extension. Got {extension}."
+            )
+
+        with open(filepath, "w") as f:
+            f.write(self._config.model_dump_json(exclude_none=True))
+
     async def _run(self, inputs: pd.DataFrame) -> pd.DataFrame:
         prompts = inputs.apply(self._fn_create_prompt, axis=1)
 

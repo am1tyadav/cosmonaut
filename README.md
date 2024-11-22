@@ -31,29 +31,25 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 
 ### Produce Structured Outputs
 
-- Predictions are returned in structured outputs ✅
+- Predictions are returned in structured outputs
 - Supports structured outputs feature provided by the AI Providers, when available
-  - Anthropic ✅
-  - Gemini ✅
-  - OpenAI ⏳
 
 ### Mix Unstructured Data Formats
 
-- Text ✅
-- Images ⏳
+- Text
+- Images (comming soon)
 
 ### Use Any AI Providers
 
-- Anthropic ✅
-- Gemini ✅
-- OpenAI ✅
-- Support for other providers which support OpenAI REST API ✅
+- Anthropic
+- Gemini
+- OpenAI
+- Support for other providers which support OpenAI REST API
 
 ### Easy to Use
 
-- Configuration file generation via CLI ✅
-- Examples ✅
-- Documentation ⏳
+- Configuration file generation via CLI
+- Examples provided for common use cases
 
 ## Installation
 
@@ -74,22 +70,14 @@ pip install git+https://github.com/am1tyadav/cosmonaut.git
 Provided you have a configuration file (eg. [config.yml](https://github.com/am1tyadav/cosmonaut/tree/main/examples/single_label/config.yml)) describing your classification problem, and have a Pandas DataFrame for the inputs, you can run Cosmonaut with:
 
 ```python
-from pathlib import Path
-import pandas as pd
-from dotenv import load_dotenv
 from cosmonaut import Cosmonaut
-
-load_dotenv() # Load environment variables from .env file
-
-config_filepath: Path = ...
-inputs: pd.DataFrame = ...
 
 # Define how to create the prompt for each input
 def create_prompt(row: pd.DataFGrame) -> str:
     return f"Some context about the input: {row['text']}"
 
 # Create and run a Cosmonaut classifier
-predictions = Cosmonaut(config_filepath, create_prompt).run(inputs)
+predictions = Cosmonaut("/config/filepath", create_prompt).run(...)
 ```
 
 ## Step by Step Example
@@ -119,7 +107,6 @@ Now that the classifier is described, we need to provide the AI provider with in
 ```yaml
 classifier:
   instructions_filename: instructions.txt
-  instructions: null
 ```
 
 Note that the `instructions` field is set to `null` because we will populating it when the config file is loaded.

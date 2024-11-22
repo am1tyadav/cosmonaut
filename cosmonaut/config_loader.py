@@ -126,23 +126,23 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
 
 
 def load_config(config_or_config_path: dict | Path) -> Config:
-    """Loads the configuration from the specified file path or from
-    a dictionary. If a dictionary is provided, the path to the instructions
-    file needs to be a full path otherwise it will be assumed to be relative
-    to the directory containing the configuration file.
-    """
+    """Loads the config from the given path. If a path is given,
+    it is assumed to be a yaml config. If a dict is given, it is
+    assumed to be a previously saved config as json, and is not
+    rebuilt."""
 
-    if isinstance(config_or_config_path, (Path, str)):
+    if isinstance(config_or_config_path, Path):
         with open(config_or_config_path, "r") as _file:
             data = yaml.safe_load(_file)
-        instructions_dirpath = config_or_config_path.parent
-    elif isinstance(config_or_config_path, dict):
-        data = config_or_config_path
-        instructions_dirpath = None
-    else:
-        raise ValueError(f"Invalid config type: {type(config_or_config_path)}")
 
-    config = Config.model_validate(data)
-    config = _handle_base_url(config)
-    config.classifier.instructions = _build_instructions(config, instructions_dirpath)
-    return config
+        config = Config.model_validate(data)
+        config = _handle_base_url(config)
+        config.classifier.instructions = _build_instructions(
+            config, config_or_config_path.parent
+        )
+        return config
+
+    if isinstance(config_or_config_path, dict):
+        return Config.model_validate(config_or_config_path)
+
+    raise ValueError(f"Invalid config type: {type(config_or_config_path)}")

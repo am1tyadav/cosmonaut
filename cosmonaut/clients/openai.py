@@ -4,7 +4,7 @@ import httpx
 from pydantic import BaseModel
 
 from cosmonaut.clients.base import BaseRESTClient
-from cosmonaut.data_models import PredictionResponse, ResponseInfo
+from cosmonaut.data_models import PredictionResponse
 from cosmonaut.logging import get_logger
 
 logger = get_logger(__name__)
@@ -59,11 +59,7 @@ class OpenAIRESTClient(BaseRESTClient):
             response = await self.completion(prompt, instructions)
             text = self._processor.extract_output(response)
             predictions = self._processor.parse_outputs(text, response_format)
-            return PredictionResponse(
-                success=True, info=ResponseInfo.SUCCESS.value, predictions=predictions
-            )
+            return PredictionResponse(success=True, predictions=predictions)
         except Exception as e:
             logger.error(e)
-            return PredictionResponse(
-                success=False, info=ResponseInfo.ERROR.value, detail=str(e)
-            )
+            return PredictionResponse(success=False, detail=str(e))

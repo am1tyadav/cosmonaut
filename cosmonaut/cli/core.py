@@ -5,7 +5,7 @@ from cosmonaut.data_models import AIServiceProvider
 
 
 def config():
-    print("============== AI Provider Configuration ==============")
+    questionary.print("============== AI Provider Configuration ==============")
 
     ai_provider = questionary.select(
         "Select AI Provider:", choices=[option.value for option in AIServiceProvider]
@@ -25,7 +25,7 @@ def config():
 
     categories = []
 
-    print("============== Classifier Configuration ==============")
+    questionary.print("============== Classifier Configuration ==============")
 
     require_reason = questionary.confirm("Require reason for predictions?").ask()
     label_descriptions_provided = questionary.confirm(
@@ -63,7 +63,6 @@ def config():
     config = {
         "classifier": {
             "instructions_filename": "instructions.txt",
-            "instructions": None,
             "require_reason": require_reason,
             "label_descriptions_provided": label_descriptions_provided,
             "categories": categories,
@@ -87,5 +86,7 @@ def config():
     with open(output_path, "w") as f:
         yaml.dump(config, f, sort_keys=False, default_flow_style=False)
 
-    print(f"Configuration file generated at: {output_path}")
-    print("Please edit the configuration file to add examples and other details.")
+    questionary.print(f"Configuration file generated at: {output_path}")
+    questionary.print(
+        "Please edit the configuration file to add examples and other details."
+    )

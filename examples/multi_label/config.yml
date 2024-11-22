@@ -1,6 +1,5 @@
 classifier:
   instructions_filename: instructions.txt # Where the instructions are located wrt the config file
-  instructions: null # Populated when loading the configuration
   require_reason: true # Require AI to give reason for each prediction
   label_descriptions_provided: true # Provide label descriptions
   categories: # List of categories to make predictions for
