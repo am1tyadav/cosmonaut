@@ -17,7 +17,9 @@ def config():
 
     model_name = questionary.text("Enter model name:").ask()
     api_key_var = questionary.text("Enter environment variable name for API key:").ask()
-    base_url = questionary.text("Enter base URL:").ask()
+    base_url = (
+        questionary.text("Enter base URL (or enter to use default):").ask() or None
+    )
     timeout = questionary.text(
         "Enter timeout in seconds:", validate=lambda x: x.isdigit()
     ).ask()
