@@ -80,7 +80,7 @@ predictions = Cosmonaut("/config/filepath", create_prompt).run(...)
 
 ## Examples
 
-See the [examples](https://github.com/am1tyadav/cosmonaut/tree/main/examples) folder for more examples. There is also a [tutorial](https://github.com/am1tyadav/cosmonaut/tree/main/examples/step_by_step.md) if you're just getting started.
+See the [examples](https://github.com/am1tyadav/cosmonaut/tree/main/examples) folder for more examples. There is also a [tutorial](https://github.com/am1tyadav/cosmonaut/tree/main/examples/tutorial.md) if you're just getting started.
 
 ## Development
 

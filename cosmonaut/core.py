@@ -24,7 +24,10 @@ class Cosmonaut:
     def config(self) -> Config:
         return self._config
 
-    def save_config(self, filepath: Path) -> None:
+    def save_config(self, filepath: Path | str) -> None:
+        if isinstance(filepath, str):
+            filepath = Path(filepath)
+
         extension = filepath.suffix
 
         if extension != ".json":
