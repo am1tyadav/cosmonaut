@@ -10,7 +10,7 @@ class GeminiProcessor(OpenAIProcessor):
         ]
         return messages
 
-    def build_json(
+    def build_request_data(
         self, messages: list[dict], temperature: float, instructions: str
     ) -> dict:
         generation_config = {

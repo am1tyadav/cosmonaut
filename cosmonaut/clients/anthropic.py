@@ -1,9 +1,9 @@
 import os
 
-from cosmonaut.clients.openai import OpenAIRESTClient
+from cosmonaut.clients.openai import OpenAIClient
 
 
-class AnthropicRESTClient(OpenAIRESTClient):
+class AnthropicClient(OpenAIClient):
     @property
     def headers(self) -> dict:
         api_key = os.getenv(self.config.api_key_var)

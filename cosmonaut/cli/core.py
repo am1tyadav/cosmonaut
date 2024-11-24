@@ -1,16 +1,15 @@
 import questionary
 import yaml
 
-from cosmonaut.data_models import AIServiceProvider
+from cosmonaut.data_models import AIServiceProvider, OpenAIResponseFormat
 
 
 def config():
-    questionary.print("============== AI Provider Configuration ==============")
+    questionary.print("========== AI Provider Configuration ==========")
 
     ai_provider = questionary.select(
         "Select AI Provider:", choices=[option.value for option in AIServiceProvider]
     ).ask()
-
     model_name = questionary.text("Enter model name:").ask()
     api_key_var = questionary.text("Enter environment variable name for API key:").ask()
     base_url = (
@@ -23,9 +22,29 @@ def config():
         "Enter max tokens:", validate=lambda x: x.isdigit()
     ).ask()
 
+    if ai_provider == AIServiceProvider.OPENAI.value:
+        openai_response_format = questionary.select(
+            "Select response format:",
+            choices=[option.value for option in OpenAIResponseFormat],
+        ).ask()
+    else:
+        openai_response_format = OpenAIResponseFormat.TEXT
+
     categories = []
 
-    questionary.print("============== Classifier Configuration ==============")
+    questionary.print("========== Classifier Configuration ==========")
+
+    use_file = questionary.confirm("Use a file for instructions?").ask()
+
+    instructions_filename = None
+    instructions = None
+
+    if use_file:
+        instructions_filename = questionary.text(
+            "Enter the name of the file containing instructions:"
+        ).ask()
+    else:
+        instructions = questionary.text("Enter instructions:").ask()
 
     require_reason = questionary.confirm("Require reason for predictions?").ask()
     label_descriptions_provided = questionary.confirm(
@@ -62,7 +81,8 @@ def config():
 
     config = {
         "classifier": {
-            "instructions_filename": "instructions.txt",
+            "instructions_filename": instructions_filename,
+            "instructions": instructions,
             "require_reason": require_reason,
             "label_descriptions_provided": label_descriptions_provided,
             "categories": categories,
@@ -75,6 +95,7 @@ def config():
             "base_url": base_url,
             "timeout": int(timeout),
             "max_tokens": int(max_tokens),
+            "openai_response_format": openai_response_format,
         },
         "data": {"result_column": "result"},
     }

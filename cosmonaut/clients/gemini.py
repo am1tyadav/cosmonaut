@@ -1,9 +1,9 @@
 import os
 
-from cosmonaut.clients.openai import OpenAIRESTClient
+from cosmonaut.clients.openai import OpenAIClient
 
 
-class GeminiRESTClient(OpenAIRESTClient):
+class GeminiClient(OpenAIClient):
     @property
     def headers(self) -> dict:
         return {"Content-Type": "application/json"}

@@ -12,7 +12,7 @@ class AnthropicProcessor(BaseProcessor):
             }
         ]
 
-    def build_json(
+    def build_request_data(
         self, messages: list[dict], temperature: float, instructions: str
     ) -> dict:
         data = {
@@ -22,11 +22,11 @@ class AnthropicProcessor(BaseProcessor):
             "max_tokens": self._config.max_tokens,
             "stream": False,
             "system": instructions,
-            "tool_choice": {"type": "tool", "name": "predicted_output"},
+            "tool_choice": {"type": "tool", "name": "parse_output"},
             "tools": [
                 {
-                    "name": "predicted_output",
-                    "description": "Predicted output using well-structured JSON.",
+                    "name": "parse_output",
+                    "description": "Parse predicted output using well-structured JSON.",
                     "input_schema": self._config.prediction_schema,
                 }
             ],
@@ -36,7 +36,7 @@ class AnthropicProcessor(BaseProcessor):
     def extract_output(self, response: dict) -> str | dict:
         return response["content"][0]["input"]
 
-    def parse_outputs(
+    def parse_output(
         self, text_or_dict: str | dict, response_format: BaseModel
     ) -> BaseModel:
         return response_format.model_validate(text_or_dict)

@@ -18,6 +18,12 @@ class KnownBaseURLs(str, Enum):
     GEMINI = "https://generativelanguage.googleapis.com/v1beta"
 
 
+class OpenAIResponseFormat(str, Enum):
+    JSON_OBJECT = "json_object"
+    JSON_SCHEMA = "json_schema"
+    TEXT = "text"
+
+
 """Prediction Schemas"""
 
 
@@ -51,7 +57,7 @@ class CategoryConfig(BaseModel):
 
 
 class ClassifierConfig(BaseModel):
-    instructions_filename: Path
+    instructions_filename: Path | None = None
     instructions: str | None = None
     require_reason: bool = True
     label_descriptions_provided: bool = True
@@ -68,6 +74,7 @@ class AIClientConfig(BaseModel):
     timeout: int = 30
     max_tokens: int = 2048
     prediction_schema: dict | None = None
+    openai_response_format: OpenAIResponseFormat = OpenAIResponseFormat.TEXT
 
 
 class DataConfig(BaseModel):

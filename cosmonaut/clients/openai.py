@@ -3,14 +3,14 @@ import os
 import httpx
 from pydantic import BaseModel
 
-from cosmonaut.clients.base import BaseRESTClient
+from cosmonaut.clients.base import BaseClient
 from cosmonaut.data_models import PredictionResponse
 from cosmonaut.logging import get_logger
 
 logger = get_logger(__name__)
 
 
-class OpenAIRESTClient(BaseRESTClient):
+class OpenAIClient(BaseClient):
     @property
     def headers(self) -> dict:
         api_key = os.getenv(self.config.api_key_var)
@@ -30,25 +30,18 @@ class OpenAIRESTClient(BaseRESTClient):
         instructions: str,
         temperature: float = 0.5,
     ) -> dict:
-        try:
-            messages = self._processor.build_messages(prompt, instructions)
-            data = self._processor.build_json(messages, temperature, instructions)
+        messages = self._processor.build_messages(prompt, instructions)
+        data = self._processor.build_request_data(messages, temperature, instructions)
 
-            async with httpx.AsyncClient(
-                base_url=self._config.base_url, timeout=self.config.timeout
-            ) as client:
-                response = await client.post(
-                    self.endpoint,
-                    json=data,
-                    headers=self.headers,
-                    timeout=self.config.timeout,
-                )
-        except Exception as e:
-            exception_type = type(e).__name__
-            error_message = f"Exception type: {exception_type}. Request failed: {e}"
-            logger.error(error_message)
-            raise Exception(error_message) from e
-
+        async with httpx.AsyncClient(
+            base_url=self._config.base_url, timeout=self.config.timeout
+        ) as client:
+            response = await client.post(
+                self.endpoint,
+                json=data,
+                headers=self.headers,
+                timeout=self.config.timeout,
+            )
         response.raise_for_status()
         return response.json()
 
@@ -58,8 +51,10 @@ class OpenAIRESTClient(BaseRESTClient):
         try:
             response = await self.completion(prompt, instructions)
             text = self._processor.extract_output(response)
-            predictions = self._processor.parse_outputs(text, response_format)
+            predictions = self._processor.parse_output(text, response_format)
             return PredictionResponse(success=True, predictions=predictions)
         except Exception as e:
+            exception_type = type(e).__name__
             logger.error(e)
-            return PredictionResponse(success=False, detail=str(e))
+            detail = f"{exception_type}: {e}"
+            return PredictionResponse(success=False, detail=detail)

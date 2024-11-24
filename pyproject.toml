@@ -17,7 +17,7 @@ readme = "README.md"
 dependencies = { file = ["requirements.txt"] }
 
 [project.optional-dependencies]
-dev = ["pytest", "pyspark"]
+dev = ["pytest"]
 
 [tool.setuptools.packages.find]
 where = ["."]

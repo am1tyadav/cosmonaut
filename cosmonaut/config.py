@@ -5,9 +5,11 @@ import yaml
 from cosmonaut.data_models import AIServiceProvider, Config, KnownBaseURLs
 
 
-def _handle_base_url(config: Config) -> Config:
+def _update_known_properties(config: Config) -> Config:
     if config.ai_client.base_url is None:
-        match config.ai_client.ai_provider:
+        ai_provider = config.ai_client.ai_provider
+
+        match ai_provider:
             case AIServiceProvider.ANTHROPIC:
                 config.ai_client.base_url = KnownBaseURLs.ANTHROPIC.value
             case AIServiceProvider.OPENAI:
@@ -15,39 +17,41 @@ def _handle_base_url(config: Config) -> Config:
             case AIServiceProvider.GEMINI:
                 config.ai_client.base_url = KnownBaseURLs.GEMINI.value
             case _:
-                raise ValueError(
-                    f"Unsupported AI Provider type: {config.ai_client.ai_provider}"
-                )
+                raise ValueError(f"Unsupported AI Provider type: {ai_provider}")
     return config
 
 
-def _get_prediction_schema(require_reason: bool, capitalise: bool = False) -> dict:
-    object_type = "OBJECT" if capitalise else "object"
-    array_type = "ARRAY" if capitalise else "array"
-    string_type = "STRING" if capitalise else "string"
-
+def _get_prediction_schema(
+    require_reason: bool, ai_provider: AIServiceProvider
+) -> dict:
     if require_reason:
         label_detail = {
-            "type": object_type,
+            "type": "object",
             "properties": {
-                "label": {"type": string_type},
-                "reason": {"type": string_type},
+                "label": {"type": "string"},
+                "reason": {"type": "string"},
             },
             "required": ["label", "reason"],
         }
+
+        if ai_provider != AIServiceProvider.GEMINI:
+            label_detail["additionalProperties"] = False
     else:
-        label_detail = {"type": string_type}
-    return {
-        "type": object_type,
+        label_detail = {"type": "string"}
+
+    schema = {
+        "type": "object",
+        "additionalProperties": False,
         "properties": {
             "predictions": {
-                "type": array_type,
+                "type": "array",
                 "items": {
-                    "type": object_type,
+                    "type": "object",
+                    "additionalProperties": False,
                     "properties": {
-                        "category": {"type": string_type},
+                        "category": {"type": "string"},
                         "labels": {
-                            "type": array_type,
+                            "type": "array",
                             "items": label_detail,
                         },
                     },
@@ -58,17 +62,30 @@ def _get_prediction_schema(require_reason: bool, capitalise: bool = False) -> di
         "required": ["predictions"],
     }
 
+    if ai_provider == AIServiceProvider.GEMINI:
+        del schema["additionalProperties"]
+        del schema["properties"]["predictions"]["items"]["additionalProperties"]
+
+    return schema
+
 
 def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
     """Builds the instructions for the classifier."""
 
-    if dirpath is None:
-        instructions_filepath = config.classifier.instructions_filename
+    if config.classifier.instructions_filename is None:
+        if config.classifier.instructions is None:
+            raise ValueError(
+                "Instructions must be provided either in the config or in a file."
+            )
+        instructions = config.classifier.instructions
     else:
-        instructions_filepath = dirpath / config.classifier.instructions_filename
-
-    with open(instructions_filepath, "r") as _file:
-        instructions = _file.read()
+        instructions_filepath = (
+            dirpath / config.classifier.instructions_filename
+            if dirpath is not None
+            else config.classifier.instructions_filename
+        )
+        with open(instructions_filepath, "r", encoding="utf-8") as f:
+            instructions = f.read()
 
     categories_text = (
         "You are expected to make predictions for the following categories:\n\n"
@@ -92,12 +109,12 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
 
         categories_text += "\n"
 
-    examples_text = ""
-
     if config.classifier.examples:
         examples_text = (
             "Here are some concrete examples of how to make the predictions:\n\n"
         )
+    else:
+        examples_text = ""
 
     for index, example in enumerate(config.classifier.examples):
         prediction_response = "["
@@ -109,7 +126,9 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
         examples_text += f"## Example {index + 1}:\n{prediction_response}\n"
 
     # Todo: write a function to simplify schema
-    schema = _get_prediction_schema(config.classifier.require_reason)
+    schema = _get_prediction_schema(
+        config.classifier.require_reason, config.ai_client.ai_provider
+    )
     config.ai_client.prediction_schema = schema
 
     schema_text = f"\nThe following is the schema for the response:\n\n{schema}\n\n"
@@ -132,17 +151,18 @@ def load_config(config_or_config_path: dict | Path) -> Config:
     rebuilt."""
 
     if isinstance(config_or_config_path, Path):
-        with open(config_or_config_path, "r") as _file:
-            data = yaml.safe_load(_file)
+        with open(config_or_config_path, "r") as f:
+            data = yaml.safe_load(f)
 
         config = Config.model_validate(data)
-        config = _handle_base_url(config)
+        config = _update_known_properties(config)
         config.classifier.instructions = _build_instructions(
             config, config_or_config_path.parent
         )
         return config
 
     if isinstance(config_or_config_path, dict):
+        """Loading from a previously saved config"""
         return Config.model_validate(config_or_config_path)
 
     raise ValueError(f"Invalid config type: {type(config_or_config_path)}")

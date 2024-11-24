@@ -37,7 +37,7 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 ### Mix Unstructured Data Formats
 
 - Text
-- Images (comming soon)
+- Images (coming soon)
 
 ### Use Any AI Providers
 
@@ -49,6 +49,7 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 ### Easy to Use
 
 - Configuration file generation via CLI
+- Save fully built configurations for future use
 - Examples provided for common use cases
 
 ## Installation
@@ -73,7 +74,7 @@ Provided you have a configuration file (eg. [config.yml](https://github.com/am1t
 from cosmonaut import Cosmonaut
 
 # Define how to create the prompt for each input
-def create_prompt(row: pd.DataFGrame) -> str:
+def create_prompt(row: pd.DataFrame) -> str:
     return f"Some context about the input: {row['text']}"
 
 # Create and run a Cosmonaut classifier
@@ -109,9 +110,7 @@ classifier:
   instructions_filename: instructions.txt
 ```
 
-Note that the `instructions` field is set to `null` because we will populating it when the config file is loaded.
-
-Next, we will create the instructions file:
+Next, we will create this instructions file:
 
 ```txt
 You are an expert gift recommender. You can recommend either one or two  gifts for a user given some information about their preferences.
@@ -232,3 +231,15 @@ Contributions are welcome - Please open an issue or submit a pull request. Pleas
 ## Known Issues
 
 - No test coverage
+
+## WIP
+
+- Unit Tests
+- OpenAI Structured Output
+- Return usage information in the response
+- Documentation
+  - Code
+  - Concepts
+- Examples
+  - Artefact logging with MLFlow
+  - Streaming Predictions with DuckDB

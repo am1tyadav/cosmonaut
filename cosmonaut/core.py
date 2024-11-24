@@ -5,7 +5,7 @@ from typing import Callable
 import pandas as pd
 
 from cosmonaut.clients.selector import get_client
-from cosmonaut.config_loader import load_config
+from cosmonaut.config import load_config
 from cosmonaut.data_models import Config, Predictions
 
 

@@ -6,7 +6,7 @@ from cosmonaut.data_models import AIClientConfig, PredictionResponse
 from cosmonaut.processors.base import BaseProcessor
 
 
-class BaseRESTClient(ABC):
+class BaseClient(ABC):
     def __init__(self, config: AIClientConfig, processor: BaseProcessor):
         self._config = config
         self._processor = processor
