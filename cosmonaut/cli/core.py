@@ -28,7 +28,7 @@ def config():
             choices=[option.value for option in OpenAIResponseFormat],
         ).ask()
     else:
-        openai_response_format = OpenAIResponseFormat.TEXT
+        openai_response_format = OpenAIResponseFormat.TEXT.value
 
     categories = []
 

@@ -12,7 +12,7 @@ from cosmonaut.data_models import Config, Predictions
 class Cosmonaut:
     def __init__(
         self,
-        config_or_config_filepath: dict | Path,
+        config_or_config_filepath: dict | Path | str,
         fn_create_prompt: Callable[[pd.DataFrame], str],
     ):
         self._config_or_config_filepath = config_or_config_filepath

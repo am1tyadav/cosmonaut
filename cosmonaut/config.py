@@ -153,13 +153,13 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
     return final_text
 
 
-def load_config(config_or_config_path: dict | Path) -> Config:
+def load_config(config_or_config_path: dict | Path | str) -> Config:
     """Load and validate a configuration from a file path or dictionary.
     If a dictionary is provided, it is assumed to be a previously saved
     configuration.
 
     Args:
-        config_or_config_path (Union[dict, Path]): Either a path to a YAML config file,
+        config_or_config_path (Union[dict, Path, str]): Either a path to a YAML config file,
             or a dictionary containing a previously saved configuration.
 
     Returns:
@@ -168,6 +168,8 @@ def load_config(config_or_config_path: dict | Path) -> Config:
     Raises:
         ValueError: If the config_or_config_path is neither a Path nor a dict.
     """
+    if isinstance(config_or_config_path, str):
+        config_or_config_path = Path(config_or_config_path)
 
     if isinstance(config_or_config_path, Path):
         with open(config_or_config_path, "r") as f:

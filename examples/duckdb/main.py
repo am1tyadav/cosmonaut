@@ -1,9 +1,12 @@
-from pathlib import Path
+import os
 
 import duckdb
 import pandas as pd
+from dotenv import load_dotenv
 
 from cosmonaut import Cosmonaut
+
+load_dotenv()
 
 
 def create_prompt(inputs: pd.Series) -> str:
@@ -18,9 +21,9 @@ def extract_predicted_label(inputs: pd.Series) -> str:
         return "Error"
 
 
-conn = duckdb.connect()
-inputs = pd.read_csv(Path(__file__).parent / "data.csv")
-classifier = Cosmonaut(Path(__file__).parent / "config.yml", create_prompt)
+dirpath = os.path.dirname(__file__)
+inputs = pd.read_csv(os.path.join(dirpath, "data.csv"))
+classifier = Cosmonaut(os.path.join(dirpath, "config.yml"), create_prompt)
 result_column = classifier.config.data.result_column
 
 
@@ -28,9 +31,10 @@ TOTAL_COUNT = len(inputs)
 BATCH_SIZE = 5
 offset = 0
 
-
+conn = duckdb.connect()
 conn.execute(
-    f"CREATE TABLE preds (id BIGINT, language VARCHAR, sentence VARCHAR, {result_column} VARCHAR)"
+    f"CREATE TABLE preds (id BIGINT, language VARCHAR, "
+    f"sentence VARCHAR, {result_column} VARCHAR)"
 )
 
 

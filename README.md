@@ -28,7 +28,7 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 
 ### Produce Structured Outputs
 
-- Predictions are returned in structured outputs
+- Predictions are returned in structured outputs (eg. JSON), validated with Pydantic
 - Supports structured outputs feature provided by the AI Providers, when available
 
 ### Mix Unstructured Data Formats
@@ -80,7 +80,7 @@ predictions = Cosmonaut("/config/filepath", create_prompt).run(...)
 
 ## Examples
 
-See the [examples](https://github.com/am1tyadav/cosmonaut/tree/main/examples) folder for more examples. There is also a [step by step](https://github.com/am1tyadav/cosmonaut/tree/main/examples/step_by_step.md) guide if you're just getting started.
+See the [examples](https://github.com/am1tyadav/cosmonaut/tree/main/examples) folder for more examples. There is also a [tutorial](https://github.com/am1tyadav/cosmonaut/tree/main/examples/step_by_step.md) if you're just getting started.
 
 ## Development
 
