@@ -8,7 +8,7 @@ help:
 	@echo "  lint           - Run trunk"
 
 install:
-	python -m pip install ".[dev]"
+	python -m pip install ".[all]"
 
 single_label:
 	python examples/single_label/main.py

@@ -3,6 +3,8 @@ name: Publish
 on:
   workflow_dispatch:
 
+permissions: read-all
+
 jobs:
   pypi-publish:
     name: upload release to PyPI

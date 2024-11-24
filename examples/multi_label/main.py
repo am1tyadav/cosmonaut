@@ -17,10 +17,7 @@ if __name__ == "__main__":
     inputs = pd.DataFrame(
         {
             "text": [
-                (
-                    "I am a 20 year old who likes to play video games."
-                    "I buy them online often with gift cards that I get on my birthday."
-                ),
+                "I likes to play video games. I buy them online often with gift cards that I get on my birthday.",
                 "I dont really do online shopping but I do like cars",
             ]
         }

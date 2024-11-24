@@ -31,3 +31,6 @@ if __name__ == "__main__":
     response = classifier.run(inputs)
 
     print(response[classifier.config.data.result_column].tolist())
+
+    # Save config for future use or deployment
+    # classifier.save_config(Path(__file__).parent / "config.json")

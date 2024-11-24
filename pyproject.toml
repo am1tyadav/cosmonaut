@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "cosmonaut"
-version = "0.0.6"
+version = "0.0.7"
 description = "Helping you find structure in the cosmos of data."
 authors = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]
 maintainers = [{ name = "Amit Yadav", email = "amit.yadav.iitr@gmail.com" }]
@@ -18,6 +18,8 @@ dependencies = { file = ["requirements.txt"] }
 
 [project.optional-dependencies]
 dev = ["pytest"]
+examples = ["pyspark"]
+all = ["cosmonaut[dev,examples]"]
 
 [tool.setuptools.packages.find]
 where = ["."]
