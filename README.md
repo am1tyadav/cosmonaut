@@ -16,18 +16,16 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 - [Step by Step Example](#step-by-step-example)
 - [More Examples](#more-examples)
 - [Development](#development)
-- [Known Issues](#known-issues)
+- [WIP](#wip)
 
 ## Features
 
 ### Support Any Classification Scenario
 
-| Scenario                          | Description                                        | Example                                                                         |
-| --------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Single label, individual category | Assigns one label from a single category           | Sentiment classification: Positive, Negative, or Neutral                        |
-| Single label, multiple categories | Assigns one label for each of multiple categories  | Topic: Tech/Finance/Health AND Sentiment: Positive/Negative                     |
-| Multi label, individual category  | Assigns multiple labels from a single category     | Topic tags: Can select any combination of Tech, Finance, and Health             |
-| Multi label, multiple categories  | Assigns multiple labels across multiple categories | Topics: Tech + Finance AND Languages: English + Spanish (multiple per category) |
+- Single label - Classify an input with a single label
+- Multi label - Classify an input with multiple labels
+- Multi category, single label - Classify an input with multiple categories, each with a single label
+- Multi category, multi label - Classify an input with multiple categories, each with multiple labels
 
 ### Produce Structured Outputs
 
@@ -228,15 +226,11 @@ Contributions are welcome - Please open an issue or submit a pull request. Pleas
 - The project should support Python 3.10+
 - [trunk.io](https://trunk.io) is used but only as a linter
 
-## Known Issues
-
-- No test coverage
-
 ## WIP
 
 - Unit Tests
-- OpenAI Structured Output
 - Return usage information in the response
+- Support ingesting image data
 - Documentation
   - Code
   - Concepts
