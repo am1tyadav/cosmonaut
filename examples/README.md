@@ -23,3 +23,9 @@ Following examples uses a configuration that does not provide label descriptions
 Cosmonaut uses Pandas to handle the input data - however, this can be a bottleneck when dealing with large datasets. Fortunately, we can use Dask, Ray or Spark to parallelize the data processing. Following example uses PySpark to parallelize the data processing.
 
 [Link](https://github.com/am1tyadav/cosmonaut/tree/main/examples/pyspark)
+
+## 5. Streaming Predictions with DuckDB
+
+Instead of trying to apply predictions on the entire dataset at once, we can batch it using DuckDB.
+
+[Link](https://github.com/am1tyadav/cosmonaut/tree/main/examples/duckdb)

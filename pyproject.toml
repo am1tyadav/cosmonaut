@@ -18,7 +18,7 @@ dependencies = { file = ["requirements.txt"] }
 
 [project.optional-dependencies]
 dev = ["pytest"]
-examples = ["pyspark"]
+examples = ["pyspark", "duckdb"]
 all = ["cosmonaut[dev,examples]"]
 
 [tool.setuptools.packages.find]

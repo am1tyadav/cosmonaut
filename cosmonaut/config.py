@@ -1,3 +1,13 @@
+"""Configuration module for Cosmonaut.
+
+This module handles configuration loading and schema generation for AI predictions.
+
+It provides functionality to:
+- Load and parse YAML configuration files
+- Update AI service provider base URLs
+- Generate prediction schema based on requirements
+"""
+
 from pathlib import Path
 
 import yaml
@@ -125,7 +135,6 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
         prediction_response += "]"
         examples_text += f"## Example {index + 1}:\n{prediction_response}\n"
 
-    # Todo: write a function to simplify schema
     schema = _get_prediction_schema(
         config.classifier.require_reason, config.ai_client.ai_provider
     )
@@ -145,10 +154,20 @@ def _build_instructions(config: Config, dirpath: Path | None = None) -> str:
 
 
 def load_config(config_or_config_path: dict | Path) -> Config:
-    """Loads the config from the given path. If a path is given,
-    it is assumed to be a yaml config. If a dict is given, it is
-    assumed to be a previously saved config as json, and is not
-    rebuilt."""
+    """Load and validate a configuration from a file path or dictionary.
+    If a dictionary is provided, it is assumed to be a previously saved
+    configuration.
+
+    Args:
+        config_or_config_path (Union[dict, Path]): Either a path to a YAML config file,
+            or a dictionary containing a previously saved configuration.
+
+    Returns:
+        Config: A validated configuration object.
+
+    Raises:
+        ValueError: If the config_or_config_path is neither a Path nor a dict.
+    """
 
     if isinstance(config_or_config_path, Path):
         with open(config_or_config_path, "r") as f:

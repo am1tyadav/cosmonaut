@@ -15,7 +15,6 @@ Cosmonaut is a tool for creating classifiers for unstructured data. Bring you ow
 - [Quickstart](#quickstart)
 - [Examples](#examples)
 - [Development](#development)
-- [WIP](#wip)
 
 ## Features
 
@@ -89,15 +88,3 @@ Contributions are welcome - Please open an issue or submit a pull request. Pleas
 
 - The project should support Python 3.10+
 - [trunk.io](https://trunk.io) is used but only as a linter
-
-## WIP
-
-- Unit Tests
-- Return usage information in the response
-- Support ingesting image data
-- Documentation
-  - Code
-  - Concepts
-- Examples
-  - Artefact logging with MLFlow
-  - Streaming Predictions with DuckDB

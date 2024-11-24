@@ -1,0 +1,33 @@
+classifier:
+  instructions_filename: null
+  instructions: You are an expert at classifying language of a given text.
+  require_reason: false
+  label_descriptions_provided: false
+  categories:
+    - category: language
+      description: The language of the given text.
+      max_predictions: 1
+      labels:
+        - english
+        - spanish
+        - portuguese
+        - german
+        - italian
+        - russian
+        - bulgarian
+        - french
+        - japanese
+        - chinese
+  examples: []
+
+ai_client:
+  ai_provider: openai
+  name: gpt-4o-mini
+  api_key_var: OPENAI_API_KEY
+  base_url: null
+  timeout: 10
+  max_tokens: 2048
+  openai_response_format: json_schema
+
+data:
+  result_column: result

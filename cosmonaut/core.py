@@ -36,6 +36,7 @@ class Cosmonaut:
             f.write(self._config.model_dump_json(exclude_none=True))
 
     async def _run(self, inputs: pd.DataFrame) -> pd.DataFrame:
+        inputs = inputs.copy()
         prompts = inputs.apply(self._fn_create_prompt, axis=1)
 
         tasks = [
